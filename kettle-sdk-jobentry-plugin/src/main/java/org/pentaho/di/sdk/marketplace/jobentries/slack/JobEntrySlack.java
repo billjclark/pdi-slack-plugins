@@ -20,7 +20,7 @@
 *
 ******************************************************************************/
 
-package org.pentaho.di.sdk.samples.jobentries.demo;
+package org.pentaho.di.sdk.marketplace.jobentries.slack;
 
 import java.util.List;
 
@@ -63,22 +63,22 @@ import org.w3c.dom.Node;
     description = "DemoJobEntry.TooltipDesc",
     image = "org/pentaho/di/sdk/samples/jobentries/demo/resources/demo.svg",
     categoryDescription = "i18n:org.pentaho.di.job:JobCategory.Category.Conditions",
-    i18nPackageName = "org.pentaho.di.sdk.samples.jobentries.demo",
+    i18nPackageName = "org.pentaho.di.sdk.marketplace.jobentries.slack",
     documentationUrl = "DemoJobEntry.DocumentationURL",
     casesUrl = "DemoJobEntry.CasesURL",
     forumUrl = "DemoJobEntry.ForumURL"
   )
-public class JobEntryDemo extends JobEntryBase implements Cloneable, JobEntryInterface {
+public class JobEntrySlack extends JobEntryBase implements Cloneable, JobEntryInterface {
 
   /**
    *  The PKG member is used when looking up internationalized strings.
    *  The properties file with localized keys is expected to reside in 
    *  {the package of the class specified}/messages/messages_{locale}.properties   
    */
-  private static Class<?> PKG = JobEntryDemo.class; // for i18n purposes $NON-NLS-1$
+  private static Class<?> PKG = JobEntrySlack.class; // for i18n purposes $NON-NLS-1$
 
   // This field holds the configured result of the job entry.
-  // It is configured in the JobEntryDemoDialog
+  // It is configured in the JobEntrySlackDialog
   private boolean outcome;
 
   /**
@@ -87,7 +87,7 @@ public class JobEntryDemo extends JobEntryBase implements Cloneable, JobEntryInt
    * 
    * @param name the name of the new job entry
    */
-  public JobEntryDemo( String name ) {
+  public JobEntrySlack( String name ) {
     super( name, "" );
 
     // the default is to generate a positive outcome 
@@ -97,7 +97,7 @@ public class JobEntryDemo extends JobEntryBase implements Cloneable, JobEntryInt
   /**
    * No-Arguments constructor for convenience purposes.
    */
-  public JobEntryDemo() {
+  public JobEntrySlack() {
     this( "" );
   }
 
@@ -106,7 +106,7 @@ public class JobEntryDemo extends JobEntryBase implements Cloneable, JobEntryInt
    * @return the class name to use for the dialog for this job entry
    */
   public String getDialogClassName() {
-    return JobEntryDemoDialog.class.getName();
+    return JobEntrySlackDialog.class.getName();
   }
 
   /**
@@ -120,7 +120,7 @@ public class JobEntryDemo extends JobEntryBase implements Cloneable, JobEntryInt
    * @return a deep copy of this
    */
   public Object clone() {
-    JobEntryDemo je = (JobEntryDemo) super.clone();
+    JobEntrySlack je = (JobEntrySlack) super.clone();
     return je;
   }
 

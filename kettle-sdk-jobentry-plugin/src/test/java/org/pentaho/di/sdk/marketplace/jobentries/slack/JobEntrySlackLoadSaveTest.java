@@ -20,18 +20,18 @@
 *
 ******************************************************************************/
 
-package org.pentaho.di.sdk.samples.jobentries.demo;
+package org.pentaho.di.sdk.marketplace.jobentries.slack;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.pentaho.di.job.entry.loadSave.JobEntryLoadSaveTestSupport;
 
-public class JobEntryDemoLoadSaveTest extends JobEntryLoadSaveTestSupport<JobEntryDemo> {
+public class JobEntrySlackLoadSaveTest extends JobEntryLoadSaveTestSupport<JobEntrySlack> {
 
   @Override
-  protected Class<JobEntryDemo> getJobEntryClass() {
-    return JobEntryDemo.class;
+  protected Class<JobEntrySlack> getJobEntryClass() {
+    return JobEntrySlack.class;
   }
 
   @Override

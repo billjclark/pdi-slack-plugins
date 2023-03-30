@@ -13,12 +13,14 @@
   <packaging>pom</packaging>
   <name>Pentaho Data Integration Slack Parent POM</name>
   <modules>
+    <!--
     <module>kettle-sdk-database-plugin</module>
     <module>kettle-sdk-embedding-samples</module>
-    <module>kettle-sdk-jobentry-plugin</module>
     <module>kettle-sdk-partitioner-plugin</module>
-    <module>kettle-sdk-step-plugin</module>
     <module>kettle-sdk-plugin-assembly</module>
+  -->
+    <module>kettle-sdk-jobentry-plugin</module>
+    <module>kettle-sdk-step-plugin</module>
   </modules>
   <properties>
     <eula-wrap_create-dist-phase></eula-wrap_create-dist-phase>
