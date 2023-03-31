@@ -150,9 +150,9 @@ public class SlackStep extends BaseStep implements StepInterface {
 
       // Locate the row index for this step's field
       // If less than 0, the field was not found.
-      data.outputFieldIndex = data.outputRowMeta.indexOfValue( meta.getOutputField() );
+      data.outputFieldIndex = data.outputRowMeta.indexOfValue( meta.getSlackURL() );
       if ( data.outputFieldIndex < 0 ) {
-        log.logError( BaseMessages.getString( PKG, "DemoStep.Error.NoOutputField" ) );
+        log.logError( BaseMessages.getString( PKG, "SlackStep.Error.NoOutputField" ) );
         setErrors( 1L );
         setOutputDone();
         return false;
@@ -169,7 +169,7 @@ public class SlackStep extends BaseStep implements StepInterface {
 
     // log progress if it is time to to so
     if ( checkFeedback( getLinesRead() ) ) {
-      logBasic( BaseMessages.getString( PKG, "DemoStep.Linenr", getLinesRead() ) ); // Some basic logging
+      logBasic( BaseMessages.getString( PKG, "SlackStep.Linenr", getLinesRead() ) ); // Some basic logging
     }
 
     // indicate that processRow() should be called again

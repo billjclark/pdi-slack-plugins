@@ -48,7 +48,7 @@ import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
 
 /**
- * This class is part of the demo step plug-in implementation.
+ * This class is part of the Slack step plug-in implementation.
  * It demonstrates the basics of developing a plug-in step for PDI.  
  *  
  * The demo step adds a new string field to the row stream and sets its
@@ -138,7 +138,7 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
     formLayout.marginWidth = Const.FORM_MARGIN;
     formLayout.marginHeight = Const.FORM_MARGIN;
     shell.setLayout( formLayout );
-    shell.setText( BaseMessages.getString( PKG, "Demo.Shell.Title" ) );
+    shell.setText( BaseMessages.getString( PKG, "Slack.Shell.Title" ) );
     int middle = props.getMiddlePct();
     int margin = Const.MARGIN;
 
@@ -162,7 +162,7 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
     fdStepname.right = new FormAttachment( 100, 0 );
     wStepname.setLayoutData( fdStepname );
 
-    wHelloFieldName = new LabelText( shell, BaseMessages.getString( PKG, "Demo.FieldName.Label" ), null );
+    wHelloFieldName = new LabelText( shell, BaseMessages.getString( PKG, "Slack.FieldName.Label" ), null );
     props.setLook( wHelloFieldName );
     wHelloFieldName.addModifyListener( lsMod );
     FormData fdValName = new FormData();
@@ -237,7 +237,7 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
    */
   private void populateDialog() {
     wStepname.selectAll();
-    wHelloFieldName.setText( meta.getOutputField() );
+    wHelloFieldName.setText( meta.getSlackURL() );
   }
 
   /**
@@ -261,7 +261,7 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
     // Setting to step name from the dialog control
     stepname = wStepname.getText();
     // Setting the  settings to the meta object
-    meta.setOutputField( wHelloFieldName.getText() );
+    meta.setSlackURL( wHelloFieldName.getText() );
     // close the SWT dialog window
     dispose();
   }

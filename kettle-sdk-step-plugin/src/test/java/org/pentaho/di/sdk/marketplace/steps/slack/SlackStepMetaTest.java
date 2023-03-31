@@ -135,7 +135,7 @@ public class SlackStepMetaTest {
     // that field must be a string and named as configured
     assertEquals( rowMeta.getValueMeta(0).getType(), ValueMetaInterface.TYPE_STRING );
     assertEquals( rowMeta.getValueMeta(0).getStorageType(), ValueMetaInterface.STORAGE_TYPE_NORMAL );
-    assertEquals( rowMeta.getFieldNames()[0], m.getOutputField() );
+    assertEquals( rowMeta.getFieldNames()[0], m.getSlackURL() );
   }
 
   @Test
@@ -147,7 +147,7 @@ public class SlackStepMetaTest {
      *
      * If needed, add a Map if the getter or setter method does not follow typical naming conventions.
      */
-    List<String> attributes = Arrays.asList( "OutputField" );
+    List<String> attributes = Arrays.asList( "SlackURL" );
 
     /*
      * If custom object types are used, additional arguments may need to be passed to the LoadSaveTester.

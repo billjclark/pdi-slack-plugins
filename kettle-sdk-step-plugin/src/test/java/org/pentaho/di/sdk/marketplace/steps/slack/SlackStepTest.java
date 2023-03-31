@@ -55,7 +55,7 @@ public class SlackStepTest {
   @Test
   public void testNoInput() throws KettleException {
     SlackStepMeta meta = new SlackStepMeta();
-    meta.setOutputField( "aFieldName" );
+    meta.setSlackURL( "aFieldName" );
     TransMeta tm = TransTestFactory.generateTestTransformation( new Variables(), meta, STEP_NAME );
 
     List<RowMetaAndData> result = TransTestFactory.executeTestTransformation( tm, TransTestFactory.INJECTOR_STEPNAME,
@@ -69,7 +69,7 @@ public class SlackStepTest {
   @Test
   public void testInputNoFields() throws KettleException {
     SlackStepMeta meta = new SlackStepMeta();
-    meta.setOutputField( "aFieldName" );
+    meta.setSlackURL( "aFieldName" );
     TransMeta tm = TransTestFactory.generateTestTransformation( new Variables(), meta, STEP_NAME );
 
     List<RowMetaAndData> result = TransTestFactory.executeTestTransformation( tm, TransTestFactory.INJECTOR_STEPNAME,
@@ -87,7 +87,7 @@ public class SlackStepTest {
   @Test
   public void testInput() throws KettleException {
     SlackStepMeta meta = new SlackStepMeta();
-    meta.setOutputField( "aFieldName" );
+    meta.setSlackURL( "aFieldName" );
     TransMeta tm = TransTestFactory.generateTestTransformation( new Variables(), meta, STEP_NAME );
 
     List<RowMetaAndData> result = TransTestFactory.executeTestTransformation( tm, TransTestFactory.INJECTOR_STEPNAME,

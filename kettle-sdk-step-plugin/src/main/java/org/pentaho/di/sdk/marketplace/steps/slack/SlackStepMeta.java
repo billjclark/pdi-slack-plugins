@@ -73,17 +73,18 @@ import org.w3c.dom.Node;
  */
 
 @Step(
-        id = "DemoStep",
-        name = "DemoStep.Name",
-        description = "DemoStep.TooltipDesc",
+        id = "SlackStep",
+        name = "SlackStep.Name",
+        description = "SlackStep.TooltipDesc",
         image = "org/pentaho/di/sdk/marketplace/steps/slack/resources/demo.svg",
         categoryDescription = "i18n:org.pentaho.di.trans.step:BaseStep.Category.Transform",
         i18nPackageName = "org.pentaho.di.sdk.marketplace.steps.slack",
-        documentationUrl = "DemoStep.DocumentationURL",
-        casesUrl = "DemoStep.CasesURL",
-        forumUrl = "DemoStep.ForumURL"
+        documentationUrl = "SlackStep.DocumentationURL",
+        casesUrl = "SlackStep.CasesURL",
+        forumUrl = "SlackStep.ForumURL"
 )
-@InjectionSupported( localizationPrefix = "DemoStepMeta.Injection." )
+
+@InjectionSupported( localizationPrefix = "SlackStepMeta.Injection." )
 public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
 
   /**
@@ -96,8 +97,8 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
   /**
    * Stores the name of the field added to the row-stream. 
    */
-  @Injection( name = "OUTPUT_FIELD" )
-  private String outputField;
+  @Injection( name = "SLACK_URL" )
+  private String slackURL;
 
   /**
    * Constructor should call super() to make sure the base class has a chance to initialize properly.
@@ -148,23 +149,23 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
    * to sensible defaults. The values set here will be used by Spoon when a new step is created.    
    */
   public void setDefault() {
-    setOutputField( "demo_field" );
+    setSlackURL( "https://www.slack.com" );
   }
 
   /**
    * Getter for the name of the field added by this step
    * @return the name of the field added
    */
-  public String getOutputField() {
-    return outputField;
+  public String getSlackURL() {
+    return slackURL;
   }
 
   /**
    * Setter for the name of the field added by this step
-   * @param outputField the name of the field added
+   * @param slackURL the name of the field added
    */
-  public void setOutputField( String outputField ) {
-    this.outputField = outputField;
+  public void setSlackURL(String slackURL) {
+    this.slackURL = slackURL;
   }
 
   /**
@@ -194,7 +195,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
     StringBuilder xml = new StringBuilder();
 
     // only one field to serialize
-    xml.append( XMLHandler.addTagValue( "outputfield", outputField ) );
+    xml.append( XMLHandler.addTagValue( "slackurl", slackURL) );
     return xml.toString();
   }
 
@@ -210,9 +211,9 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
    */
   public void loadXML( Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore ) throws KettleXMLException {
     try {
-      setOutputField( XMLHandler.getNodeValue( XMLHandler.getSubNode( stepnode, "outputfield" ) ) );
+      setSlackURL( XMLHandler.getNodeValue( XMLHandler.getSubNode( stepnode, "slackurl" ) ) );
     } catch ( Exception e ) {
-      throw new KettleXMLException( "Demo plugin unable to read step info from XML node", e );
+      throw new KettleXMLException( "Slack plugin unable to read step info from XML node", e );
     }
   }
 
@@ -228,7 +229,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
   public void saveRep( Repository rep, IMetaStore metaStore, ObjectId id_transformation, ObjectId id_step )
       throws KettleException {
     try {
-      rep.saveStepAttribute( id_transformation, id_step, "outputfield", outputField ); //$NON-NLS-1$
+      rep.saveStepAttribute( id_transformation, id_step, "slackurl", slackURL); //$NON-NLS-1$
     } catch ( Exception e ) {
       throw new KettleException( "Unable to save step into repository: " + id_step, e );
     }
@@ -246,7 +247,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
   public void readRep( Repository rep, IMetaStore metaStore, ObjectId id_step, List<DatabaseMeta> databases )
       throws KettleException {
     try {
-      outputField  = rep.getStepAttributeString( id_step, "outputfield" ); //$NON-NLS-1$
+      slackURL = rep.getStepAttributeString( id_step, "slackurl" ); //$NON-NLS-1$
     } catch ( Exception e ) {
       throw new KettleException( "Unable to load step from repository", e );
     }
@@ -274,7 +275,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
      */
 
     // a value meta object contains the meta data for a field
-    ValueMetaInterface v = new ValueMetaString( outputField );
+    ValueMetaInterface v = new ValueMetaString(slackURL);
 
     // setting trim type to "both"
     v.setTrimType( ValueMetaInterface.TRIM_TYPE_BOTH );
