@@ -48,6 +48,7 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <!--suppress MavenModelInspection -->
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
