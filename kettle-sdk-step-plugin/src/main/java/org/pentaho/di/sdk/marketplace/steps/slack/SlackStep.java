@@ -57,6 +57,7 @@ import org.pentaho.di.trans.step.StepMetaInterface;
 public class SlackStep extends BaseStep implements StepInterface {
 
   private static final Class<?> PKG = SlackStepMeta.class; // for i18n purposes
+  StringBuilder slackError, slackSuccess;
 
   /**
    * The constructor should simply pass on its arguments to the parent class.
@@ -98,6 +99,9 @@ public class SlackStep extends BaseStep implements StepInterface {
       return false;
     }
 
+    slackError = new StringBuilder();
+    slackError.append("These lines had missing ages: /n");
+    slackSuccess = new StringBuilder();
     // Add any step-specific initialization that may be needed here
     return true;
   }
@@ -135,6 +139,18 @@ public class SlackStep extends BaseStep implements StepInterface {
     // if no more rows are expected, indicate step is finished and processRow() should not be called again
     if ( r == null ) {
       setOutputDone();
+
+      // Add any step-specific initialization that may be needed here
+      // Create a JsonHttpPost instance
+      SlackJsonPost slackJsonPost = new SlackJsonPost("https://hooks.slack.com/services/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");
+
+      // Post a JSON object to the server with the message "Hello, world!"
+      try {
+        slackJsonPost.post(slackError.toString());
+      } catch (Exception e) {
+        throw new KettleException(e);
+      }
+
       return false;
     }
 
@@ -162,6 +178,7 @@ public class SlackStep extends BaseStep implements StepInterface {
     // safely add the string "Hello World!" at the end of the output row
     // the row array will be resized if necessary 
     Object[] outputRow = RowDataUtil.resizeArray( r, data.outputRowMeta.size() );
+    slackError.append(outputRow[0] + " name: " + outputRow[3]);
     outputRow[data.outputFieldIndex] = "Hello World!";
 
     // put the row to the output row stream
@@ -196,7 +213,6 @@ public class SlackStep extends BaseStep implements StepInterface {
     SlackStepMeta meta = (SlackStepMeta) smi;
     SlackStepData data = (SlackStepData) sdi;
 
-    // Add any step-specific initialization that may be needed here
 
     // Call superclass dispose()
     super.dispose( meta, data );
