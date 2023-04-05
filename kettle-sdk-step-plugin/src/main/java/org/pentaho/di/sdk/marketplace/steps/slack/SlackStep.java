@@ -100,7 +100,7 @@ public class SlackStep extends BaseStep implements StepInterface {
     }
 
     slackError = new StringBuilder();
-    slackError.append("These lines had missing ages: /n");
+    slackError.append(meta.getMsgText());
     slackSuccess = new StringBuilder();
     // Add any step-specific initialization that may be needed here
     return true;
@@ -139,10 +139,9 @@ public class SlackStep extends BaseStep implements StepInterface {
     // if no more rows are expected, indicate step is finished and processRow() should not be called again
     if ( r == null ) {
       setOutputDone();
-
       // Add any step-specific initialization that may be needed here
       // Create a JsonHttpPost instance
-      SlackJsonPost slackJsonPost = new SlackJsonPost("https://hooks.slack.com/services/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");
+      SlackJsonPost slackJsonPost = new SlackJsonPost(meta.getSlackURL());
 
       // Post a JSON object to the server with the message "Hello, world!"
       try {

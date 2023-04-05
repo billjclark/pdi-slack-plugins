@@ -127,10 +127,10 @@ public class SlackStepMetaTest {
     m.setDefault();
 
     RowMetaInterface rowMeta = new RowMeta();
-    m.getFields( rowMeta, "demo_step", null, null, null, null, null );
+    m.getFields( rowMeta, "slack_step", null, null, null, null, null );
 
     // expect one field to be added to the row stream
-    assertEquals( rowMeta.size(), 1 );
+    assertEquals( rowMeta.size(), 2 );
 
     // that field must be a string and named as configured
     assertEquals( rowMeta.getValueMeta(0).getType(), ValueMetaInterface.TYPE_STRING );
@@ -174,7 +174,7 @@ public class SlackStepMetaTest {
     boolean foundMatch = false;
     for ( CheckResultInterface result : checkResults ) {
       if ( result.getType() == CheckResultInterface.TYPE_RESULT_ERROR
-          && result.getText().equals( BaseMessages.getString( SlackStepMeta.class, "Demo.CheckResult.ReceivingRows.ERROR" ) ) ) {
+          && result.getText().equals( BaseMessages.getString( SlackStepMeta.class, "Slack.CheckResult.ReceivingRows.ERROR" ) ) ) {
         foundMatch = true;
       }
     }
@@ -187,7 +187,7 @@ public class SlackStepMetaTest {
     foundMatch = false;
     for ( CheckResultInterface result : checkResults ) {
       if ( result.getType() == CheckResultInterface.TYPE_RESULT_ERROR
-          && result.getText().equals( BaseMessages.getString( SlackStepMeta.class, "Demo.CheckResult.ReceivingRows.ERROR" ) ) ) {
+          && result.getText().equals( BaseMessages.getString( SlackStepMeta.class, "Slack.CheckResult.ReceivingRows.ERROR" ) ) ) {
         foundMatch = true;
       }
     }
@@ -200,7 +200,7 @@ public class SlackStepMetaTest {
     foundMatch = false;
     for ( CheckResultInterface result : checkResults ) {
       if ( result.getType() == CheckResultInterface.TYPE_RESULT_OK
-          && result.getText().equals( BaseMessages.getString( SlackStepMeta.class, "Demo.CheckResult.ReceivingRows.OK" ) ) ) {
+          && result.getText().equals( BaseMessages.getString( SlackStepMeta.class, "Slack.CheckResult.ReceivingRows.OK" ) ) ) {
         foundMatch = true;
       }
     }

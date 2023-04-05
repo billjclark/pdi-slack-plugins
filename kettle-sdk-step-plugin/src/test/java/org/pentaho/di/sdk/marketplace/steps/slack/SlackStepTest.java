@@ -55,7 +55,8 @@ public class SlackStepTest {
   @Test
   public void testNoInput() throws KettleException {
     SlackStepMeta meta = new SlackStepMeta();
-    meta.setSlackURL( "aFieldName" );
+    meta.setSlackURL( "https://www.slack.com" );
+    meta.setMsgText("A Slack Message");
     TransMeta tm = TransTestFactory.generateTestTransformation( new Variables(), meta, STEP_NAME );
 
     List<RowMetaAndData> result = TransTestFactory.executeTestTransformation( tm, TransTestFactory.INJECTOR_STEPNAME,
@@ -69,7 +70,8 @@ public class SlackStepTest {
   @Test
   public void testInputNoFields() throws KettleException {
     SlackStepMeta meta = new SlackStepMeta();
-    meta.setSlackURL( "aFieldName" );
+    meta.setSlackURL( "https://www.slack.com" );
+    meta.setMsgText("A Slack Message");
     TransMeta tm = TransTestFactory.generateTestTransformation( new Variables(), meta, STEP_NAME );
 
     List<RowMetaAndData> result = TransTestFactory.executeTestTransformation( tm, TransTestFactory.INJECTOR_STEPNAME,
@@ -78,16 +80,18 @@ public class SlackStepTest {
     assertNotNull( result );
     assertEquals( 50001, result.size() );
     for ( int i = 0; i < 50001; i++ ) {
-      assertEquals( 1, result.get( i ).size() );
+      assertEquals( 2, result.get( i ).size() );
       assertEquals( "Hello World!", result.get( i ).getString( 0, "default value" ) );
     }
   }
 
   // If the step receives rows with existing fields, there should be a new field at the end of each output row
+
   @Test
   public void testInput() throws KettleException {
     SlackStepMeta meta = new SlackStepMeta();
-    meta.setSlackURL( "aFieldName" );
+    meta.setSlackURL( "https://www.slack.com" );
+    meta.setMsgText( "A Slack message" );
     TransMeta tm = TransTestFactory.generateTestTransformation( new Variables(), meta, STEP_NAME );
 
     List<RowMetaAndData> result = TransTestFactory.executeTestTransformation( tm, TransTestFactory.INJECTOR_STEPNAME,
@@ -96,7 +100,7 @@ public class SlackStepTest {
     assertNotNull( result );
     assertEquals( 5, result.size() );
     for ( int i = 0; i < 5; i++ ) {
-      assertEquals( 2, result.get( i ).size() );
+      assertEquals( 3, result.get( i ).size() );
       assertEquals( "UUID", result.get( i ).getValueMeta( 0 ).getName() );
       try {
         UUID.fromString( result.get( i ).getString(0, "default value" ) );
@@ -106,6 +110,7 @@ public class SlackStepTest {
       assertEquals( "Hello World!", result.get( i ).getString( 1, "default value" ) );
     }
   }
+
 
   /**
    * 

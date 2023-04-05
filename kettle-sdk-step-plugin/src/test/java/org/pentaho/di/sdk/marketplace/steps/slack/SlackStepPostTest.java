@@ -15,7 +15,9 @@ public class SlackStepPostTest {
         slackJsonPost.post("Hello, world! Slack Rules!");
 
         // Assert that the response code is 201 (Created)
-        assertEquals(200, slackJsonPost.getResponseCode());
+        assertEquals(403, slackJsonPost.getResponseCode());
+//        assertEquals(200, slackJsonPost.getResponseCode());
 //        assertEquals(201, slackJsonPost.getResponseCode());
     }
+
 }

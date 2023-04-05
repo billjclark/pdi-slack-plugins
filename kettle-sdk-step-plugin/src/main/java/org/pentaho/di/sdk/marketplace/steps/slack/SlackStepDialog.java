@@ -77,7 +77,8 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
   private SlackStepMeta meta;
 
   // text field holding the name of the field to add to the row stream
-  private LabelText wHelloFieldName;
+  private LabelText wSlackURL;
+  private LabelText wMsgText;
 
   /**
    * The constructor should simply invoke super() and save the incoming meta
@@ -162,21 +163,31 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
     fdStepname.right = new FormAttachment( 100, 0 );
     wStepname.setLayoutData( fdStepname );
 
-    wHelloFieldName = new LabelText( shell, BaseMessages.getString( PKG, "Slack.FieldName.Label" ), null );
-    props.setLook( wHelloFieldName );
-    wHelloFieldName.addModifyListener( lsMod );
+    wSlackURL = new LabelText( shell, BaseMessages.getString( PKG, "Slack.FieldName.Label" ), null );
+    props.setLook(wSlackURL);
+    wSlackURL.addModifyListener( lsMod );
     FormData fdValName = new FormData();
     fdValName.left = new FormAttachment( 0, 0 );
     fdValName.right = new FormAttachment( 100, 0 );
     fdValName.top = new FormAttachment( wStepname, margin );
-    wHelloFieldName.setLayoutData( fdValName );
+    wSlackURL.setLayoutData( fdValName );
+
+//    wMsgText = new LabelText( shell, "BaseMessages", null );
+    wMsgText = new LabelText( shell, BaseMessages.getString( PKG, "Slack.MsgText.Label" ), null );
+    props.setLook(wMsgText);
+    wSlackURL.addModifyListener( lsMod );
+    FormData fdMsgName = new FormData();
+    fdMsgName.left = new FormAttachment( 0, 0 );
+    fdMsgName.right = new FormAttachment( 100, 0 );
+    fdMsgName.top = new FormAttachment( wMsgText, margin );
+    wMsgText.setLayoutData( fdMsgName );
 
     // OK and cancel buttons
     wOK = new Button( shell, SWT.PUSH );
     wOK.setText( BaseMessages.getString( PKG, "System.Button.OK" ) );
     wCancel = new Button( shell, SWT.PUSH );
     wCancel.setText( BaseMessages.getString( PKG, "System.Button.Cancel" ) );
-    setButtonPositions( new Button[] { wOK, wCancel }, margin, wHelloFieldName );
+    setButtonPositions( new Button[] { wOK, wCancel }, margin, wSlackURL);
 
     // Add listeners for cancel and OK
     lsCancel = new Listener() {
@@ -199,7 +210,7 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
       }
     };
     wStepname.addSelectionListener( lsDef );
-    wHelloFieldName.addSelectionListener( lsDef );
+    wSlackURL.addSelectionListener( lsDef );
 
     // Detect X or ALT-F4 or something that kills this window and cancel the dialog properly
     shell.addShellListener( new ShellAdapter() {
@@ -237,7 +248,8 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
    */
   private void populateDialog() {
     wStepname.selectAll();
-    wHelloFieldName.setText( meta.getSlackURL() );
+    wSlackURL.setText( meta.getSlackURL() );
+    wMsgText.setText( "meta.getMsgText()" );
   }
 
   /**
@@ -261,7 +273,8 @@ public class SlackStepDialog extends BaseStepDialog implements StepDialogInterfa
     // Setting to step name from the dialog control
     stepname = wStepname.getText();
     // Setting the  settings to the meta object
-    meta.setSlackURL( wHelloFieldName.getText() );
+    meta.setSlackURL( wSlackURL.getText() );
+    meta.setMsgText( wMsgText.getText() );
     // close the SWT dialog window
     dispose();
   }

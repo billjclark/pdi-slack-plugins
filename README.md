@@ -19,6 +19,10 @@ This project contains a series of examples demonstrating various use-cases for e
   * Executing Jobs or Transformations in Java
   * Interacting with a Carte Web Server via APIs
 
+## Getting Started
+
+Chose which PDI functionality that you want to extend. In the pom.xml file, remove or comment out the modules that you are not using.
+
 ## Building
 
 From the main directory, or any of the module sub-directories, run `mvn clean package site`.

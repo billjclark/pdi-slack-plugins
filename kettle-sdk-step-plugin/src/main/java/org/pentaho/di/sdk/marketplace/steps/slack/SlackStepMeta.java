@@ -95,10 +95,12 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
   private static final Class<?> PKG = SlackStepMeta.class; // for i18n purposes
 
   /**
-   * Stores the name of the field added to the row-stream. 
+   * Stores the name of the fields added to the row-stream.
    */
   @Injection( name = "SLACK_URL" )
   private String slackURL;
+  @Injection( name = "MSG_TEXT" )
+  private String msgText;
 
   /**
    * Constructor should call super() to make sure the base class has a chance to initialize properly.
@@ -149,7 +151,9 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
    * to sensible defaults. The values set here will be used by Spoon when a new step is created.    
    */
   public void setDefault() {
+
     setSlackURL( "https://www.slack.com" );
+    setMsgText("Default Message to Slack");
   }
 
   /**
@@ -166,6 +170,22 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
    */
   public void setSlackURL(String slackURL) {
     this.slackURL = slackURL;
+  }
+
+  /**
+   * Getter for the name of the field added by this step
+   * @return the name of the field added
+   */
+  public String getMsgText() {
+    return msgText;
+  }
+
+  /**
+   * Setter for the name of the field added by this step
+   * @param msgText the name of the field added
+   */
+  public void setMsgText(String msgText) {
+    this.msgText = msgText;
   }
 
   /**
@@ -194,8 +214,9 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
   public String getXML() throws KettleValueException {
     StringBuilder xml = new StringBuilder();
 
-    // only one field to serialize
+    // only two field to serialize
     xml.append( XMLHandler.addTagValue( "slackurl", slackURL) );
+    xml.append( XMLHandler.addTagValue( "msgtext", msgText) );
     return xml.toString();
   }
 
@@ -212,6 +233,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
   public void loadXML( Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore ) throws KettleXMLException {
     try {
       setSlackURL( XMLHandler.getNodeValue( XMLHandler.getSubNode( stepnode, "slackurl" ) ) );
+      setMsgText(XMLHandler.getNodeValue( XMLHandler.getSubNode( stepnode, "msgtext" ) ) );
     } catch ( Exception e ) {
       throw new KettleXMLException( "Slack plugin unable to read step info from XML node", e );
     }
@@ -230,6 +252,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
       throws KettleException {
     try {
       rep.saveStepAttribute( id_transformation, id_step, "slackurl", slackURL); //$NON-NLS-1$
+      rep.saveStepAttribute( id_transformation, id_step, "msgtext", msgText); //$NON-NLS-1$
     } catch ( Exception e ) {
       throw new KettleException( "Unable to save step into repository: " + id_step, e );
     }
@@ -248,6 +271,7 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
       throws KettleException {
     try {
       slackURL = rep.getStepAttributeString( id_step, "slackurl" ); //$NON-NLS-1$
+      msgText = rep.getStepAttributeString( id_step, "msgtext" ); //$NON-NLS-1$
     } catch ( Exception e ) {
       throw new KettleException( "Unable to load step from repository", e );
     }
@@ -285,6 +309,19 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
 
     // modify the row structure and add the field this step generates  
     inputRowMeta.addValueMeta( v );
+
+    // a value meta object contains the meta data for a field
+    ValueMetaInterface vT = new ValueMetaString(msgText);
+
+    // setting trim type to "both"
+    vT.setTrimType( ValueMetaInterface.TRIM_TYPE_BOTH );
+
+    // the name of the step that adds this field
+    vT.setOrigin( name );
+
+    // modify the row structure and add the field this step generates
+    inputRowMeta.addValueMeta( vT );
+
   }
 
   /**
@@ -315,11 +352,11 @@ public class SlackStepMeta extends BaseStepMeta implements StepMetaInterface {
     // See if there are input streams leading to this step!
     if ( input != null && input.length > 0 ) {
       cr = new CheckResult( CheckResult.TYPE_RESULT_OK,
-        BaseMessages.getString( PKG, "Demo.CheckResult.ReceivingRows.OK" ), stepMeta );
+        BaseMessages.getString( PKG, "Slack.CheckResult.ReceivingRows.OK" ), stepMeta );
       remarks.add( cr );
     } else {
       cr = new CheckResult( CheckResult.TYPE_RESULT_ERROR,
-        BaseMessages.getString( PKG, "Demo.CheckResult.ReceivingRows.ERROR" ), stepMeta );
+        BaseMessages.getString( PKG, "Slack.CheckResult.ReceivingRows.ERROR" ), stepMeta );
       remarks.add( cr );
     }
   }
